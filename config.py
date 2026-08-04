@@ -8,10 +8,10 @@ load_dotenv()
 class Settings(BaseSettings):
     # DeepSeek API 配置
     OPENAI_API_KEY: str = ""
-    OPENAI_BASE_URL: str = "https://api.deepseek.com/v1"
+    OPENAI_BASE_URL: str = ""
 
     # 通用模型
-    MODEL_NAME: str = "deepseek-v4-pro"
+    MODEL_NAME: str = ""
     TAVILY_API_KEY: str = ""
 
     # 搜索配置

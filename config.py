@@ -1,18 +1,18 @@
-import os
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
 # 加载 .env 文件
 load_dotenv()
 
+
 class Settings(BaseSettings):
     # DeepSeek API 配置
-    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
+    OPENAI_API_KEY: str = ""
     OPENAI_BASE_URL: str = "https://api.deepseek.com/v1"
 
     # 通用模型
-    MODEL_NAME: str = os.getenv("MODEL_NAME", "deepseek-v4-pro")
-    TAVILY_API_KEY: str = os.getenv("TAVILY_API_KEY", "")
+    MODEL_NAME: str = "deepseek-v4-pro"
+    TAVILY_API_KEY: str = ""
 
     # 搜索配置
     MAX_SEARCH_RESULTS: int = 5

@@ -7,12 +7,9 @@ search = TavilySearch(max_results=settings.MAX_SEARCH_RESULTS)
 
 
 def web_search(query: str) -> str:
-    """执行网络搜索，返回结构化结果"""
+    """执行网络搜索，返回结果"""
     try:
-        # 返回的是 dict，不是 list
         response = search.invoke({"query": query})
-
-        # 真正的搜索结果在 "results" 键下
         items = response.get("results", [])
 
         if not items:
@@ -21,7 +18,7 @@ def web_search(query: str) -> str:
         formatted = []
         for i, r in enumerate(items, 1):
             title = r.get("title", "无标题")
-            content = r.get("content", "无内容")
+            content = r.get("content", "")[:800]  # 直接截断，不用清洗
             url = r.get("url", "无来源")
             formatted.append(f"[{i}] {title}\n{content}\n来源: {url}")
 

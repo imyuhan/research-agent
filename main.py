@@ -1,5 +1,3 @@
-# @File     : main.py
-# @Time     : 2026/8/4 11:48
 from workflow import graph
 from state import ResearchState
 from config import settings

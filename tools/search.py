@@ -1,5 +1,3 @@
-# @File     : search.py
-# @Time     : 2026/8/4 11:47
 from langchain_tavily import TavilySearch
 from config import settings
 

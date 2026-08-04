@@ -16,7 +16,7 @@
 
 ## 快速开始
 1. 配置环境：`cp .env.example .env`（填入 API Key）
-2. 安装依赖：`pip install -r requirements.txt`
+2. 安装依赖：`pip install -r requirements`
 3. 运行：`python main.py`
 
 ## 项目结构

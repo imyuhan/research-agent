@@ -1,5 +1,3 @@
-# @File     : state.py
-# @Time     : 2026/8/4 11:48
 from typing import TypedDict, Annotated, List
 from langgraph.graph.message import add_messages
 from langchain_core.messages import BaseMessage

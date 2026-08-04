@@ -1,5 +1,3 @@
-# @File     : reviewer.py
-# @Time     : 2026/8/4 11:47
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from config import settings

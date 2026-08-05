@@ -10,11 +10,15 @@ writer_prompt = ChatPromptTemplate.from_messages([
 - 包含以下结构：## 执行摘要、## 核心内容、## 结论
 - 语言严谨、客观，适合技术读者
 - 基于提供的资料撰写，不要编造未提及的信息
-- 每个关键论点后可标注引用来源 [n]"""),
+- 引用标注 [n] 必须对应"引用来源列表"中的编号，不要编造列表之外的编号
+- 不要自行编写"参考资料"章节，该章节会由系统在报告末尾自动生成"""),
     ("human", """研究主题：{topic}
 
 研究资料：
 {sources}
+
+引用来源列表（编号对应报告正文中的 [n]）：
+{references}
 
 请撰写报告：""")
 ])
@@ -27,10 +31,32 @@ llm = ChatOpenAI(
 )
 
 
+def _build_references(citations: list) -> str:
+    """将引用列表格式化为注入 prompt 的编号文本"""
+    if not citations:
+        return "（无可用引用来源）"
+    return "\n".join([
+        f"[{c['index']}] {c['title']} — {c['url']}"
+        for c in citations
+    ])
+
+
+def _append_references(draft: str, citations: list) -> str:
+    """在草稿末尾追加参考资料章节（真实 URL，不依赖 LLM 输出）"""
+    if not citations or "## 参考资料" in draft:
+        return draft
+    refs = "\n".join([
+        f"[{c['index']}] {c['title']} — {c['url']}"
+        for c in citations
+    ])
+    return f"{draft.rstrip()}\n\n## 参考资料\n{refs}"
+
+
 def writer_node(state: dict) -> dict:
-    """写作节点：基于研究资料生成报告草稿"""
+    """写作节点：基于研究资料生成报告草稿，并追加参考资料"""
     topic = state.get("topic", "")
     sources = state.get("search_results", [])
+    citations = state.get("citations", [])
 
     if not sources:
         print("⚠️ 没有研究资料")
@@ -42,15 +68,18 @@ def writer_node(state: dict) -> dict:
         for s in sources
     ])
 
+    references_text = _build_references(citations)
+
     print(f"✍️ Writer 正在撰写报告，基于 {len(sources)} 条研究资料...")
 
     chain = writer_prompt | llm
     response = chain.invoke({
         "topic": topic,
-        "sources": sources_text
+        "sources": sources_text,
+        "references": references_text,
     })
 
-    draft = response.content
+    draft = _append_references(response.content, citations)
     print(f"   报告生成完成，长度: {len(draft)} 字符")
 
     return {

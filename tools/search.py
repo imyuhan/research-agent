@@ -4,23 +4,20 @@ from config import settings
 search = TavilySearch(max_results=settings.MAX_SEARCH_RESULTS)
 
 
-def web_search(query: str) -> str:
-    """执行网络搜索，返回结果"""
+def web_search(query: str) -> list[dict]:
+    """执行网络搜索，返回结构化结果列表 [{title, url, content}]，空结果或出错返回 []"""
     try:
         response = search.invoke({"query": query})
         items = response.get("results", [])
 
-        if not items:
-            return "未找到相关搜索结果"
+        results = []
+        for r in items:
+            results.append({
+                "title": r.get("title", "无标题"),
+                "url": r.get("url", ""),
+                "content": r.get("content", "")[:800],  # 直接截断，不用清洗
+            })
+        return results
 
-        formatted = []
-        for i, r in enumerate(items, 1):
-            title = r.get("title", "无标题")
-            content = r.get("content", "")[:800]  # 直接截断，不用清洗
-            url = r.get("url", "无来源")
-            formatted.append(f"[{i}] {title}\n{content}\n来源: {url}")
-
-        return "\n\n".join(formatted)
-
-    except Exception as e:
-        return f"搜索失败: {str(e)}"
+    except Exception:
+        return []

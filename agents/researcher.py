@@ -17,28 +17,26 @@ def researcher_node(state: dict) -> dict:
         print(f"   搜索: {query}")
         items = web_search(query)
 
-        # 组装正文文本
+        # 组装正文文本（编号与全局引用编号一致，供 Writer 正确对应参考资料）
         if not items:
             content = "未找到相关搜索结果"
         else:
-            content = "\n\n".join([
-                f"[{i}] {r['title']}\n{r['content']}\n来源: {r['url']}"
-                for i, r in enumerate(items, 1)
-            ])
+            parts = []
+            for r in items:
+                all_citations.append({
+                    "index": len(all_citations) + 1,
+                    "query": query,
+                    "title": r["title"],
+                    "url": r["url"],
+                })
+                idx = all_citations[-1]["index"]
+                parts.append(f"[{idx}] {r['title']}\n{r['content']}\n来源: {r['url']}")
+            content = "\n\n".join(parts)
 
         all_results.append({
             "query": query,
             "content": content
         })
-
-        # 收集引用（全局编号，供 Writer 注入与报告参考资料使用）
-        for r in items:
-            all_citations.append({
-                "index": len(all_citations) + 1,
-                "query": query,
-                "title": r["title"],
-                "url": r["url"],
-            })
 
         print(f"   结果长度: {len(content)} 字符")
 

@@ -11,7 +11,8 @@ writer_prompt = ChatPromptTemplate.from_messages([
 - 语言严谨、客观，适合技术读者
 - 基于提供的资料撰写，不要编造未提及的信息
 - 引用标注 [n] 必须对应"引用来源列表"中的编号，不要编造列表之外的编号
-- 不要自行编写"参考资料"章节，该章节会由系统在报告末尾自动生成"""),
+- 不要自行编写"参考资料"章节，该章节会由系统在报告末尾自动生成
+- 若提供了"审核意见"，必须逐条响应：针对每条意见落实到正文中修改，如认为某条不适用则简要说明理由"""),
     ("human", """研究主题：{topic}
 
 研究资料：
@@ -19,6 +20,9 @@ writer_prompt = ChatPromptTemplate.from_messages([
 
 引用来源列表（编号对应报告正文中的 [n]）：
 {references}
+
+审核意见（首次撰写时为"（无）"）：
+{review_feedback}
 
 请撰写报告：""")
 ])
@@ -57,6 +61,7 @@ def writer_node(state: dict) -> dict:
     topic = state.get("topic", "")
     sources = state.get("search_results", [])
     citations = state.get("citations", [])
+    review_feedback = state.get("review_feedback", "")
 
     if not sources:
         print("⚠️ 没有研究资料")
@@ -77,6 +82,7 @@ def writer_node(state: dict) -> dict:
         "topic": topic,
         "sources": sources_text,
         "references": references_text,
+        "review_feedback": review_feedback or "（无）",
     })
 
     draft = _append_references(response.content, citations)

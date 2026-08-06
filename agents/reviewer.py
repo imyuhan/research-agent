@@ -36,6 +36,7 @@ def reviewer_node(state: dict) -> dict:
             "review_feedback": "报告内容不足",
             "review_score": 0,
             "review_passed": False,
+            "revision_count": state.get("revision_count", 0) + 1,
             "current_step": "reviewer"
         }
 
@@ -72,5 +73,6 @@ def reviewer_node(state: dict) -> dict:
         "review_feedback": feedback,
         "review_score": score,
         "review_passed": passed,
+        "revision_count": state.get("revision_count", 0) + 1 if not passed else state.get("revision_count", 0),
         "current_step": "reviewer"
     }

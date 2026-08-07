@@ -1,4 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 from config import settings
 import re
@@ -24,6 +25,8 @@ llm = ChatOpenAI(
     temperature=0.3
 )
 
+reviewer_chain = reviewer_prompt | llm | StrOutputParser()
+
 
 def reviewer_node(state: dict) -> dict:
     """审核节点：评估报告质量，决定是否通过"""
@@ -40,15 +43,16 @@ def reviewer_node(state: dict) -> dict:
             "current_step": "reviewer"
         }
 
-    print("🔍 Reviewer 正在审核报告...")
+    print("🔍 Reviewer 正在审核报告...\n")
 
-    chain = reviewer_prompt | llm
-    response = chain.invoke({
+    feedback = ""
+    for text in reviewer_chain.stream({
         "topic": topic,
         "draft": draft
-    })
-
-    feedback = response.content
+    }):
+        feedback += text
+        print(text, end="", flush=True)
+    print("\n")
 
     # 解析评分（提取第一个数字）
     score = 5

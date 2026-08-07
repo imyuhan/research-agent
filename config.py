@@ -17,6 +17,8 @@ class Settings(BaseSettings):
     # 搜索配置
     MAX_SEARCH_RESULTS: int = 5
     MAX_REVISIONS: int = 3
+    MAX_CITATIONS_PER_QUERY: int = 5
+    MAX_SEARCH_CONCURRENCY: int = 5 #并行搜索的工程线程数
 
 
 settings = Settings()

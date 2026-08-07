@@ -1,14 +1,9 @@
-from typing import TypedDict, Annotated, List
-from langgraph.graph.message import add_messages
-from langchain_core.messages import BaseMessage
+from typing import TypedDict, List
 
 
 class ResearchState(TypedDict):
     # 输入
     topic: str
-
-    # 对话/执行历史（LangGraph 会自动合并）
-    messages: Annotated[List[BaseMessage], add_messages]
 
     # Planner 输出
     plan: List[str]

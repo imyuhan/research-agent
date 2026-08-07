@@ -1,4 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 from config import settings
 
@@ -33,6 +34,8 @@ llm = ChatOpenAI(
     base_url=settings.OPENAI_BASE_URL,
     temperature=0.7
 )
+
+writer_chain = writer_prompt | llm | StrOutputParser()
 
 
 def _build_references(citations: list) -> str:
@@ -75,18 +78,20 @@ def writer_node(state: dict) -> dict:
 
     references_text = _build_references(citations)
 
-    print(f"✍️ Writer 正在撰写报告，基于 {len(sources)} 条研究资料...")
+    print(f"✍️ Writer 正在撰写报告，基于 {len(sources)} 条研究资料...\n")
 
-    chain = writer_prompt | llm
-    response = chain.invoke({
+    draft = ""
+    for text in writer_chain.stream({
         "topic": topic,
         "sources": sources_text,
         "references": references_text,
         "review_feedback": review_feedback or "（无）",
-    })
+    }):
+        draft += text
+        print(text, end="", flush=True)
+    print(f"\n\n   报告生成完成，长度: {len(draft)} 字符")
 
-    draft = _append_references(response.content, citations)
-    print(f"   报告生成完成，长度: {len(draft)} 字符")
+    draft = _append_references(draft, citations)
 
     return {
         "draft": draft,

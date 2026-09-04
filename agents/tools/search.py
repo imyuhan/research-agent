@@ -1,6 +1,7 @@
 from langchain_core.tools import tool
 from langchain_tavily import TavilySearch
-from config import settings
+
+from infrastructure.config import settings
 
 search = TavilySearch(max_results=settings.MAX_SEARCH_RESULTS)
 
@@ -31,9 +32,16 @@ def web_search(query: str, start_date: str = "", end_date: str = "") -> list[dic
 
 
 @tool
-def web_search_tool(query: str) -> str:
-    """网络搜索工具：输入查询词，返回网页搜索结果文本（标题/内容/来源URL）。"""
-    items = web_search(query)
+def web_search_tool(
+    query: str,
+    start_date: str = "",
+    end_date: str = "",
+) -> str:
+    """
+    网络搜索工具：输入查询词，返回网页搜索结果文本（标题/内容/来源URL）。
+    可选 start_date / end_date(YYYY-MM-DD),将结果限定在指定日期范围。
+    """
+    items = web_search(query, start_date=start_date, end_date=end_date)
     if not items:
         return "未找到相关搜索结果"
     return "\n\n".join(

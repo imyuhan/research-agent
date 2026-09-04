@@ -1,0 +1,75 @@
+# Deep Residual Learning for Image Recognition
+
+- arXiv id: 1512.03385
+- 中文标题(参考): Deep Residual Learning for Image Recognition
+- 主题: CV / 深度学习
+- 备注: ResNet,残差连接的奠基工作,深度学习在视觉领域的关键突破
+- 论文链接: https://arxiv.org/abs/1512.03385
+- PDF 链接: https://arxiv.org/pdf/1512.03385
+- HTML 全文: https://arxiv.org/html/1512.03385
+- 抓取时间: 2026-08-12 17:22:49
+- 提交历史: Submitted on 10 Dec 2015
+- 分类: Computer Vision and Pattern Recognition (cs.CV) 
+- 备注(原文): Tech report
+- 作者: He, K, Zhang, X, Ren, S, Sun, J
+
+======================================================================
+Abstract
+======================================================================
+
+Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions. We provide comprehensive empirical evidence showing that these residual networks are easier to optimize, and can gain accuracy from considerably increased depth. On the ImageNet dataset we evaluate residual nets with a depth of up to 152 layers---8x deeper than VGG nets but still having lower complexity. An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task. We also present analysis on CIFAR-10 with 100 and 1000 layers. The depth of representations is of central importance for many visual recognition tasks. Solely due to our extremely deep representations, we obtain a 28% relative improvement on the COCO object detection dataset. Deep residual nets are foundations of our submissions to ILSVRC &amp; COCO 2015 competitions, where we also won the 1st places on the tasks of ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.
+
+======================================================================
+Why it matters / 为什么要读这篇
+======================================================================
+
+ResNet,残差连接的奠基工作,深度学习在视觉领域的关键突破
+
+======================================================================
+补充阅读笔记(中文)
+======================================================================
+
+## 1. 背景动机
+
+深度卷积神经网络在图像分类上不断刷新成绩(VGG、GoogLeNet 等),当时学术界普遍认为:
+网络越深,表达能力越强,效果应该越好。但在实践中,56 层的 plain 网络比 20 层的 plain 网络
+训练误差和测试误差都更高——这不是过拟合(因为训练误差也高),而被称为 degradation problem:
+随着深度增加,优化难度急剧上升,网络反而更难了。简单堆叠层会让训练变得非常困难。
+
+## 2. 核心方法
+
+作者提出残差学习(residual learning)框架。不让堆叠的层直接拟合底层映射 H(x),
+而是拟合残差 F(x) = H(x) - x,这样原始映射被重写为 H(x) = F(x) + x。
+
+实现上极其简单:在几层卷积的输入和输出之间加一条恒等映射的 shortcut(identity shortcut),
+输出 = F(x, {W_i}) + x。当输入输出维度不一致时,用 1x1 卷积做维度匹配(W_s * x)。
+
+直觉上,如果某一层是"冗余"的,只需要让 F(x) → 0 就好,网络很容易学到 identity;
+而优化一个接近 0 的扰动远比优化一个全新的映射容易。
+
+论文给出了 ImageNet 上 18/34/50/101/152 层五个深度的 ResNet,以及在 CIFAR-10 上
+探索到 1000+ 层的实验。
+
+## 3. 关键结果
+
+ImageNet 2012:152 层 ResNet 单模型 top-5 错误率 4.49%,ensemble 后 3.57%,
+赢得 ILSVRC 2015 分类冠军,也拿下 ImageNet detection、ImageNet localization、
+COCO detection、COCO segmentation 四个赛道的第一。
+
+CIFAR-10:1202 层网络仍能训练,虽然 test error 没有继续下降,但训练成功本身就证明了
+残差结构能让非常深的网络被优化。
+
+关键对比:plain-34 比 plain-18 训练误差高 6.7%,而 ResNet-34 比 ResNet-18 训练误差低 1.2%,
+说明 degradation 现象被完全消除。
+
+## 4. 局限与后续影响
+
+ResNet 是深度学习分水岭式的论文。它在工程上几乎"零成本"——只是在 block 之间加一条加法支路,
+却让"训练上百层网络"从不可能变成标配。
+
+残差连接+BN 成了后续几乎所有深度网络的默认积木:Transformer encoder/decoder block、
+U-Net、扩散模型的 UNet backbone、DALL·E/Stable Diffusion 的图像解码器都建立在 ResNet
+范式之上。可以说,没有残差连接就没有 2015 年之后的所有深度模型。
+
+后续衍生包括:ResNeXt(分组卷积增强)、Wide ResNet、DenseNet(更密的连接)、
+以及面向移动端的 MobileNet、ShuffleNet 等轻量化结构。

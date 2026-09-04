@@ -1,0 +1,72 @@
+# Attention Is All You Need
+
+- arXiv id: 1706.03762
+- 中文标题(参考): Attention Is All You Need
+- 主题: NLP / Transformer
+- 备注: Transformer 原始论文,后续所有大语言模型的架构基础
+- 论文链接: https://arxiv.org/abs/1706.03762
+- PDF 链接: https://arxiv.org/pdf/1706.03762
+- HTML 全文: https://arxiv.org/html/1706.03762
+- 抓取时间: 2026-08-12 17:22:48
+- 提交历史: Submitted on 12 Jun 2017 (v1), last revised 2 Aug 2023 (this version, v7)
+- 分类: Computation and Language (cs.CL) ; Machine Learning (cs.LG)
+- 备注(原文): 15 pages, 5 figures
+- 作者: Vaswani, A, Shazeer, N, Parmar, N, Uszkoreit, J, Jones, L, Gomez, A N, Kaiser, L, Polosukhin, I
+
+======================================================================
+Abstract
+======================================================================
+
+The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.
+
+======================================================================
+Why it matters / 为什么要读这篇
+======================================================================
+
+Transformer 原始论文,后续所有大语言模型的架构基础
+
+======================================================================
+补充阅读笔记(中文)
+======================================================================
+
+## 1. 背景动机
+
+在 Transformer 出现之前(2017 年之前),序列建模(机器翻译、文本生成)的主流架构是 RNN/LSTM
+(如 Bahdanau attention、ByteNet、ConvS2S)以及 GNMT 这类编码器-解码器模型。这些模型有一个共同问题:
+RNN 必须按时间步顺序计算,无法充分并行;而卷积模型要堆很多层才能覆盖长距离依赖,学习长程关系效率低。
+此外,这些架构都依赖 encoder-decoder 之间的注意力机制来做对齐,作者由此提出一个大胆假设:
+如果 attention 本身已经这么好用,是不是可以完全抛弃 recurrence 和 convolution,只用 attention 来建序列模型?
+
+## 2. 核心方法
+
+Transformer 的核心是 Scaled Dot-Product Attention:
+  Attention(Q, K, V) = softmax(Q K^T / sqrt(d_k)) V
+其中 sqrt(d_k) 是为防止点积方差过大导致 softmax 饱和。作者进一步把它扩展成 Multi-Head Attention:
+把 Q/K/V 在 d_model 维度上切成 h 头,各自独立做 attention,最后 concat 起来投影回去——
+多头让模型能在不同子空间里学到不同类型的依赖关系。
+
+整体架构是 encoder-decoder,每层包含:
+  1) Multi-Head Self-Attention(让当前位置看序列里所有位置);
+  2) 逐位置的前馈网络(FFN,两层线性+ReLU,等价于逐 token 的 1x1 卷积);
+  3) Add & LayerNorm 残差结构稳定训练;
+  4) decoder 多一层 masked self-attention 保证自回归。
+
+位置信息用 sinusoidal 位置编码(也有利于外推到训练时没见过的长度)直接加到输入 embedding 上。
+训练上用 Adam,带 warmup 的学习率调度,label smoothing,以及 dropout=0.1 等常规正则。
+
+## 3. 关键结果
+
+在 WMT 2014 英德翻译上,big 模型 28.4 BLEU,比当时最好的模型(含 ensemble)还高 2 BLEU 以上;
+在 WMT 2014 英法翻译上,单模型 41.8 BLEU,刷新 SOTA,而训练成本仅 8 块 GPU 跑 3.5 天——
+相对前代工作大幅降低,这是论文最有冲击力的一项数据。
+另外,在 English constituency parsing 任务上,无论数据量大小都优于已有模型,证明架构有泛化能力。
+
+## 4. 局限与后续影响
+
+这篇论文的影响怎么说都不过分:它直接催生了 BERT(2018)、GPT-2/3(2019/2020)、T5、
+以及后续几乎所有大语言模型。没有 Transformer,scaling law、in-context learning、
+ChatGPT 都不会出现。Multi-Head Self-Attention + 残差 + LayerNorm 也成了后续所有视觉模型
+(ViT、Swin)、多模态模型(CLIP、LLaVA)、语音模型(Whisper)的标准积木。
+
+后续改进方向包括:相对位置编码(RoPE、ALiBi)、GQA/MQA、FlashAttention 等推理加速、
+以及把 attention 复杂度从 O(n^2) 降到线性(Linear Attention、State Space Models)等。

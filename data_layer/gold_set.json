@@ -1,0 +1,335 @@
+[
+  {
+    "query": "请介绍一下 Transformer 架构",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Transformer 是一种基于自注意力机制的深度学习架构，由 Google 在 2017 年的论文中提出。",
+    "relevant_keywords": ["Transformer", "自注意力", "Google", "2017", "深度学习"]
+  },
+  {
+    "query": "Transformer 是哪个团队在什么时候提出的？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Transformer 是一种基于自注意力机制的深度学习架构，由 Google 在 2017 年的论文中提出。",
+    "relevant_keywords": ["Transformer", "Google", "2017"]
+  },
+  {
+    "query": "自注意力机制是哪个模型的核心思想？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Transformer 是一种基于自注意力机制的深度学习架构，由 Google 在 2017 年的论文中提出。",
+    "relevant_keywords": ["Transformer", "自注意力", "Google"]
+  },
+
+  {
+    "query": "什么是 LangChain？它提供哪些核心模块？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "LangChain 是一个用于构建 LLM 应用的 Python 框架，提供了 Prompt、Chain、Agent、Retriever 等核心抽象。",
+    "relevant_keywords": ["LangChain", "Prompt", "Chain", "Agent", "Retriever", "Python"]
+  },
+  {
+    "query": "LangChain 是用什么语言写的？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "LangChain 是一个用于构建 LLM 应用的 Python 框架，提供了 Prompt、Chain、Agent、Retriever 等核心抽象。",
+    "relevant_keywords": ["LangChain", "Python"]
+  },
+
+  {
+    "query": "FAISS 主要用来做什么？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "FAISS 是 Meta 开源的向量相似度检索库，支持十亿级别向量的毫秒级搜索。",
+    "relevant_keywords": ["FAISS", "Meta", "向量相似度", "检索", "十亿"]
+  },
+  {
+    "query": "FAISS 是哪家公司开源的？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "FAISS 是 Meta 开源的向量相似度检索库，支持十亿级别向量的毫秒级搜索。",
+    "relevant_keywords": ["FAISS", "Meta"]
+  },
+
+  {
+    "query": "什么是 Prompt Engineering？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Prompt Engineering 是通过精心设计输入提示来引导 LLM 输出更符合预期结果的技术。",
+    "relevant_keywords": ["Prompt", "LLM", "提示"]
+  },
+  {
+    "query": "Prompt Engineering 的目标是什么？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Prompt Engineering 是通过精心设计输入提示来引导 LLM 输出更符合预期结果的技术。",
+    "relevant_keywords": ["Prompt", "LLM", "预期结果"]
+  },
+
+  {
+    "query": "Few-Shot Learning 和传统训练有什么区别？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Few-Shot Learning 是指在 prompt 中给出少量示例，让模型在不重新训练的情况下学会新任务。",
+    "relevant_keywords": ["Few-Shot", "prompt", "不重新训练"]
+  },
+  {
+    "query": "Few-Shot Learning 是怎么让模型学会新任务的？",
+    "source_file": "ai_tools.txt",
+    "source_sentence": "Few-Shot Learning 是指在 prompt 中给出少量示例，让模型在不重新训练的情况下学会新任务。",
+    "relevant_keywords": ["Few-Shot", "prompt", "示例"]
+  },
+
+  {
+    "query": "导盲犬属于什么动物？能做什么？",
+    "source_file": "animal.txt",
+    "source_sentence": "狗是人类最忠诚的动物伙伴，经过训练可以执行多种任务，如导盲、搜救、缉毒等。",
+    "relevant_keywords": ["狗", "导盲", "搜救", "缉毒", "训练"]
+  },
+  {
+    "query": "缉毒犬是怎么训练出来的？",
+    "source_file": "animal.txt",
+    "source_sentence": "狗是人类最忠诚的动物伙伴，经过训练可以执行多种任务，如导盲、搜救、缉毒等。",
+    "relevant_keywords": ["狗", "缉毒", "训练"]
+  },
+
+  {
+    "query": "猫为什么被叫做捕鼠能手？",
+    "source_file": "animal.txt",
+    "source_sentence": "猫是独居型的家养宠物，行动敏捷，喜欢在夜间活动，捕鼠能力极强。",
+    "relevant_keywords": ["猫", "捕鼠", "夜间"]
+  },
+  {
+    "query": "猫的习性有哪些特点？",
+    "source_file": "animal.txt",
+    "source_sentence": "猫是独居型的家养宠物，行动敏捷，喜欢在夜间活动，捕鼠能力极强。",
+    "relevant_keywords": ["猫", "独居", "夜间", "捕鼠"]
+  },
+
+  {
+    "query": "中国的国宝是什么动物？",
+    "source_file": "animal.txt",
+    "source_sentence": "熊猫是中国的国宝，以竹子为主食，黑白相间的毛色深受全世界人民喜爱。",
+    "relevant_keywords": ["熊猫", "国宝", "竹子"]
+  },
+  {
+    "query": "熊猫主要吃什么？",
+    "source_file": "animal.txt",
+    "source_sentence": "熊猫是中国的国宝，以竹子为主食，黑白相间的毛色深受全世界人民喜爱。",
+    "relevant_keywords": ["熊猫", "竹子"]
+  },
+
+  {
+    "query": "老虎主要栖息在哪里？",
+    "source_file": "animal.txt",
+    "source_sentence": "老虎是大型猫科动物，主要分布在亚洲森林，是食物链顶端的捕食者。",
+    "relevant_keywords": ["老虎", "亚洲", "森林", "猫科"]
+  },
+  {
+    "query": "老虎在生态系统中处于什么位置？",
+    "source_file": "animal.txt",
+    "source_sentence": "老虎是大型猫科动物，主要分布在亚洲森林，是食物链顶端的捕食者。",
+    "relevant_keywords": ["老虎", "食物链", "捕食者", "猫科"]
+  },
+
+  {
+    "query": "蓝鲸是地球上最大的动物吗？",
+    "source_file": "animal.txt",
+    "source_sentence": "鲸鱼是海洋中的哺乳动物，用肺呼吸，体型巨大，蓝鲸是地球上最大的动物。",
+    "relevant_keywords": ["鲸鱼", "蓝鲸", "哺乳动物", "肺"]
+  },
+  {
+    "query": "鲸鱼为什么需要浮出水面？",
+    "source_file": "animal.txt",
+    "source_sentence": "鲸鱼是海洋中的哺乳动物，用肺呼吸，体型巨大，蓝鲸是地球上最大的动物。",
+    "relevant_keywords": ["鲸鱼", "肺", "哺乳动物"]
+  },
+
+  {
+    "query": "故宫在北京的什么位置？",
+    "source_file": "city.txt",
+    "source_sentence": "北京是中国的首都，有着三千多年的建城史和八百多年的建都史，故宫是世界上规模最大的宫殿建筑群。",
+    "relevant_keywords": ["北京", "故宫", "宫殿", "建都史"]
+  },
+  {
+    "query": "北京作为首都的历史有多长？",
+    "source_file": "city.txt",
+    "source_sentence": "北京是中国的首都，有着三千多年的建城史和八百多年的建都史，故宫是世界上规模最大的宫殿建筑群。",
+    "relevant_keywords": ["北京", "建城史", "建都史"]
+  },
+
+  {
+    "query": "上海外滩有什么著名景观？",
+    "source_file": "city.txt",
+    "source_sentence": "上海是中国最大的经济中心城市，外滩的万国建筑博览群见证了近代百年风云。",
+    "relevant_keywords": ["上海", "外滩", "万国建筑"]
+  },
+  {
+    "query": "上海在中国的经济地位如何？",
+    "source_file": "city.txt",
+    "source_sentence": "上海是中国最大的经济中心城市，外滩的万国建筑博览群见证了近代百年风云。",
+    "relevant_keywords": ["上海", "经济中心"]
+  },
+
+  {
+    "query": "西安有哪些著名的历史遗迹？",
+    "source_file": "city.txt",
+    "source_sentence": "西安古称长安，是十三朝古都，兵马俑被誉为世界第八大奇迹。",
+    "relevant_keywords": ["西安", "长安", "兵马俑", "十三朝"]
+  },
+  {
+    "query": "兵马俑为什么被称为世界第八大奇迹？",
+    "source_file": "city.txt",
+    "source_sentence": "西安古称长安，是十三朝古都，兵马俑被誉为世界第八大奇迹。",
+    "relevant_keywords": ["兵马俑", "世界第八大奇迹", "西安"]
+  },
+
+  {
+    "query": "西湖在哪个城市？有什么文化典故？",
+    "source_file": "city.txt",
+    "source_sentence": "杭州以西湖闻名于世，苏轼笔下的\"欲把西湖比西子，淡妆浓抹总相宜\"流传千古。",
+    "relevant_keywords": ["杭州", "西湖", "苏轼"]
+  },
+  {
+    "query": "苏轼描写西湖的名句是什么？",
+    "source_file": "city.txt",
+    "source_sentence": "杭州以西湖闻名于世，苏轼笔下的\"欲把西湖比西子，淡妆浓抹总相宜\"流传千古。",
+    "relevant_keywords": ["苏轼", "西湖", "淡妆浓抹"]
+  },
+
+  {
+    "query": "深圳 GDP 突破三万亿用了多长时间？",
+    "source_file": "city.txt",
+    "source_sentence": "深圳是中国改革开放的窗口城市，从 1980 年建市到如今 GDP 突破三万亿只用了四十年。",
+    "relevant_keywords": ["深圳", "改革开放", "GDP", "三万亿", "1980"]
+  },
+
+  {
+    "query": "饺子的起源可以追溯到哪个朝代？",
+    "source_file": "food.txt",
+    "source_sentence": "饺子的历史可以追溯到东汉时期，是北方春节最具代表性的传统食物。",
+    "relevant_keywords": ["饺子", "东汉", "春节", "传统食物"]
+  },
+
+  {
+    "query": "火锅最早是怎么发明的？",
+    "source_file": "food.txt",
+    "source_sentence": "火锅起源于重庆码头工人的饮食习惯，通过一锅汤底煮各种食材实现共享式用餐。",
+    "relevant_keywords": ["火锅", "重庆", "码头工人", "汤底"]
+  },
+
+  {
+    "query": "北京烤鸭的烤制工艺有什么特别之处？",
+    "source_file": "food.txt",
+    "source_sentence": "北京烤鸭采用果木明火烤制，皮酥肉嫩，配上薄饼、葱丝、甜面酱食用。",
+    "relevant_keywords": ["北京烤鸭", "果木", "明火", "薄饼", "甜面酱"]
+  },
+
+  {
+    "query": "西北拉面的特色是什么？",
+    "source_file": "food.txt",
+    "source_sentence": "拉面是西北地区的特色面食，以其筋道的面条和浓郁的牛肉汤闻名全国。",
+    "relevant_keywords": ["拉面", "西北", "牛肉汤", "筋道"]
+  },
+
+  {
+    "query": "粤式早茶里最经典的三大件是什么？",
+    "source_file": "food.txt",
+    "source_sentence": "粤式早茶以精致的点心著称，虾饺、烧麦、肠粉是茶楼里最经典的三大件。",
+    "relevant_keywords": ["粤式早茶", "虾饺", "烧麦", "肠粉"]
+  },
+
+  {
+    "query": "葡萄一般生长在什么气候地区？",
+    "source_file": "fruit.txt",
+    "source_sentence": "葡萄是紫色的水果,通常生长在温带地区。",
+    "relevant_keywords": ["葡萄", "紫色", "温带"]
+  },
+
+  {
+    "query": "苹果有哪些常见颜色？",
+    "source_file": "fruit.txt",
+    "source_sentence": "苹果通常是红色的,也有绿色和黄色的品种。",
+    "relevant_keywords": ["苹果", "红色", "绿色", "黄色"]
+  },
+
+  {
+    "query": "香蕉产自哪里？",
+    "source_file": "fruit.txt",
+    "source_sentence": "香蕉弯弯的,黄色的,产自热带。",
+    "relevant_keywords": ["香蕉", "黄色", "热带"]
+  },
+
+  {
+    "query": "西瓜为什么适合夏天吃？",
+    "source_file": "fruit.txt",
+    "source_sentence": "西瓜是绿色的外皮,红色的果肉,夏天解暑最好。",
+    "relevant_keywords": ["西瓜", "解暑", "红色果肉"]
+  },
+
+  {
+    "query": "Python 是一门什么样的编程语言？",
+    "source_file": "tech.txt",
+    "source_sentence": "Python 是一种解释型、面向对象、动态数据类型的高级程序设计语言。",
+    "relevant_keywords": ["Python", "解释型", "面向对象", "动态数据类型"]
+  },
+
+  {
+    "query": "LangGraph 和 LangChain 是什么关系？",
+    "source_file": "tech.txt",
+    "source_sentence": "LangGraph 是 LangChain 的图状态机扩展,用于构建多 agent 协作流程。",
+    "relevant_keywords": ["LangGraph", "LangChain", "图状态机", "agent"]
+  },
+
+  {
+    "query": "RAG 的中文全称是什么？解决什么问题？",
+    "source_file": "tech.txt",
+    "source_sentence": "RAG 是检索增强生成的缩写,让 LLM 能查外部知识库再回答。",
+    "relevant_keywords": ["RAG", "检索增强生成", "LLM", "知识库"]
+  },
+
+  {
+    "query": "Vector Store 的主要功能是什么？",
+    "source_file": "tech.txt",
+    "source_sentence": "Vector Store 是向量数据库,做相似度检索。",
+    "relevant_keywords": ["Vector Store", "向量数据库", "相似度检索"]
+  },
+
+  {
+    "query": "ResNet 论文的核心贡献是什么？",
+    "source_file": "papers/1512_03385_Deep_Residual_Learning_for_Image_Recognition.txt",
+    "source_sentence": "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously.",
+    "relevant_keywords": ["ResNet", "residual", "残差", "深度", "训练"]
+  },
+  {
+    "query": "ResNet 在 ILSVRC 2015 上取得了什么成绩？",
+    "source_file": "papers/1512_03385_Deep_Residual_Learning_for_Image_Recognition.txt",
+    "source_sentence": "An ensemble of these residual nets achieves 3.57% error on the ImageNet test set. This result won the 1st place on the ILSVRC 2015 classification task.",
+    "relevant_keywords": ["ResNet", "ILSVRC", "2015", "ImageNet", "3.57%"]
+  },
+
+  {
+    "query": "Transformer 原始论文是哪一篇？",
+    "source_file": "papers/1706_03762_Attention_Is_All_You_Need.txt",
+    "source_sentence": "Attention Is All You Need, Transformer 原始论文,后续所有大语言模型的架构基础",
+    "relevant_keywords": ["Transformer", "Attention Is All You Need", "1706.03762"]
+  },
+
+  {
+    "query": "GPT-3 论文的标题是什么？参数量多大？",
+    "source_file": "papers/2005_14165_Language_Models_are_Few_Shot_Learners.txt",
+    "source_sentence": "GPT-3,175B 参数,In-context learning 的代表性工作",
+    "relevant_keywords": ["GPT-3", "175B", "In-context learning", "Few-Shot"]
+  },
+
+  {
+    "query": "DDPM 论文主要研究什么？",
+    "source_file": "papers/2006_11239_Denoising_Diffusion_Probabilistic_Models.txt",
+    "source_sentence": "DDPM,现代图像生成扩散模型的奠基论文之一",
+    "relevant_keywords": ["DDPM", "扩散模型", "图像生成", "Denoising Diffusion"]
+  },
+
+  {
+    "query": "CLIP 论文用什么样的方法对齐图像和文本？",
+    "source_file": "papers/2103_00020_Learning_Transferable_Visual_Models_From_Natural_L.txt",
+    "source_sentence": "CLIP,用对比学习对齐图像和文本,影响后续多模态研究",
+    "relevant_keywords": ["CLIP", "对比学习", "多模态", "图像", "文本"]
+  },
+
+  {
+    "query": "LLaMA 是哪家公司开源的？",
+    "source_file": "papers/2302_13971_LLaMA_Open_and_Efficient_Foundation_Language_Model.txt",
+    "source_sentence": "Meta 开源 LLaMA 系列,对开源大模型生态影响深远",
+    "relevant_keywords": ["LLaMA", "Meta", "开源"]
+  }
+]

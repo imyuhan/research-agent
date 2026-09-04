@@ -6,3 +6,13 @@ langchain-tavily>=0.1.0
 pydantic>=2.0.0
 pydantic-settings>=2.0.0
 python-dotenv>=1.0.0
+pytest>=8.0.0
+fastapi>=0.115.0
+uvicorn>=0.30.0
+
+# 本地 RAG
+sentence-transformers>=2.7.0
+langchain-chroma>=0.1.0
+chromadb>=0.5.0
+# 可选: OpenSearch 后端(用不到可以不装)
+# opensearch-py>=2.5.0

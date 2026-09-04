@@ -1,0 +1,78 @@
+# Learning Transferable Visual Models From Natural Language Supervision
+
+- arXiv id: 2103.00020
+- 中文标题(参考): Learning Transferable Visual Models from Natural Language Supervision
+- 主题: 多模态 / 视觉-语言
+- 备注: CLIP,用对比学习对齐图像和文本,影响后续多模态研究
+- 论文链接: https://arxiv.org/abs/2103.00020
+- PDF 链接: https://arxiv.org/pdf/2103.00020
+- HTML 全文: https://arxiv.org/html/2103.00020
+- 抓取时间: 2026-08-12 17:22:55
+- 提交历史: Submitted on 26 Feb 2021
+- 分类: Computer Vision and Pattern Recognition (cs.CV) ; Machine Learning (cs.LG)
+- 作者: Radford, A, Kim, J W, Hallacy, C, Ramesh, A, Goh, G, Agarwal, S, Sastry, G, Askell, A, Mishkin, P, Clark, J, Krueger, G, Sutskever, I
+
+======================================================================
+Abstract
+======================================================================
+
+State-of-the-art computer vision systems are trained to predict a fixed set of predetermined object categories. This restricted form of supervision limits their generality and usability since additional labeled data is needed to specify any other visual concept. Learning directly from raw text about images is a promising alternative which leverages a much broader source of supervision. We demonstrate that the simple pre-training task of predicting which caption goes with which image is an efficient and scalable way to learn SOTA image representations from scratch on a dataset of 400 million (image, text) pairs collected from the internet. After pre-training, natural language is used to reference learned visual concepts (or describe new ones) enabling zero-shot transfer of the model to downstream tasks. We study the performance of this approach by benchmarking on over 30 different existing computer vision datasets, spanning tasks such as OCR, action recognition in videos, geo-localization, and many types of fine-grained object classification. The model transfers non-trivially to most tasks and is often competitive with a fully supervised baseline without the need for any dataset specific training. For instance, we match the accuracy of the original ResNet-50 on ImageNet zero-shot without needing to use any of the 1.28 million training examples it was trained on. We release our code and pre-trained model weights at this https URL .
+
+======================================================================
+Why it matters / 为什么要读这篇
+======================================================================
+
+CLIP,用对比学习对齐图像和文本,影响后续多模态研究
+
+======================================================================
+补充阅读笔记(中文)
+======================================================================
+
+## 1. 背景动机
+
+2020-2021 年,视觉领域的主流预训练范式是:在 ImageNet(或其他人工标注的图像分类数据集)上
+做有监督预训练,然后在下游任务(COCO、ObjectNet、医疗影像等)上 finetune。
+
+这种范式有两个局限:
+  1) 标注成本高——ImageNet 1400 万张图,每张都有人工 label;
+  2) 标签语义受限——固定的 1000 类无法表达丰富语义,迁移到新类别时仍需 finetune。
+
+同期已有一些"图文对"预训练工作(Visual N-Grams、ConVIRT、VirTex),但规模太小,
+效果有限。作者(OpenAI)的核心想法是:互联网上有海量(图像, 文本)对,自然语言本身就提供了
+监督信号——能不能用一句描述,而不是固定 label,来训练视觉模型?
+
+## 2. 核心方法
+
+CLIP(Contrastive Language-Image Pre-training)核心非常简单:在 batch 内做对比学习。
+
+  1) 图像编码器(ResNet 或 ViT)和文本编码器(Transformer)分别把 image/text 投影到同一个
+     d 维 embedding 空间,做 L2 归一化;
+  2) 构造 NxN 的 cosine similarity 矩阵,对角线是正样本(匹配的图-文对),其他位置都是负样本;
+  3) 损失是对称的 InfoNCE:图像→文本和文本→图像两个方向各算一次 cross-entropy。
+
+训练数据 WIT(WebImageText)约 4 亿(图像, 文本)对,32,768 大 batch 训练很多 epoch。
+推理时,把下游任务的类别名转成文本 prompt("a photo of a {label}."),和待分类图像算相似度,
+相似度最高的类别即为预测——这就是 zero-shot 分类。
+
+## 3. 关键结果
+
+ImageNet zero-shot:CLIP(ResNet-50)准确率与有监督训练的 ResNet-50 相当;CLIP ViT-L/14 达到 76.2%,
+在 zero-shot 设定下首次超过当时最好的有监督模型。
+
+在 27 个数据集组成的"robustness benchmark"上,CLIP 整体超过有监督 baseline,展现了极强的
+分布外泛化能力。
+
+线性探测(linear probe)实验:冻结 CLIP 视觉编码器,只训练一个线性分类头,在 ImageNet 上
+也能达到 85.3%(ViT-L/14 @ 336px),和有监督预训练相当。
+
+## 4. 局限与后续影响
+
+CLIP 是多模态时代的奠基工作。它证明了"自然语言+海量图文对"是训练通用视觉模型的可行路径,
+为后续 DALL·E 2/3、Stable Diffusion(用 CLIP 文本编码器作为 condition)、LLaVA、
+MiniGPT-4、GPT-4V 等一整套多模态系统铺平了道路。
+
+对工业界,CLIP 是 zero-shot 图像分类、内容审核、推荐系统冷启动的标配工具;在 robotics 和
+embodied AI 里,CLIP-style 对齐也是核心模块(SayCan、RT-2)。
+
+学术上,CLIP 引爆了 contrastive multimodal learning 研究,后续衍生包括 ALIGN、BASIC、
+FLAN-style instruction tuning、BLIP、Chinese-CLIP 等。

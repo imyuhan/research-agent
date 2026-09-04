@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    env_file:
+      - .env
+    environment:
+      DOCUMENTS_DIR: /app/data_layer/documents
+      CHROMA_PERSIST_DIR: /app/local_chroma_db
+      RAG_STORE_BACKEND: chroma
+      FRONTEND_ORIGINS: http://localhost:8080
+    volumes:
+      - ./data_layer/documents:/app/data_layer/documents
+      - ./local_chroma_db:/app/local_chroma_db
+      - ./local_models:/app/local_models
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped

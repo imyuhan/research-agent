@@ -1,0 +1,12 @@
+.git
+.venv
+__pycache__
+.pytest_cache
+*.pyc
+.env
+
+frontend/node_modules
+frontend/dist
+
+local_chroma_db
+local_models

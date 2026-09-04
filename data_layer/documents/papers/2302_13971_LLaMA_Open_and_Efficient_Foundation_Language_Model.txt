@@ -1,0 +1,70 @@
+# LLaMA: Open and Efficient Foundation Language Models
+
+- arXiv id: 2302.13971
+- 中文标题(参考): LLaMA: Open and Efficient Foundation Language Models
+- 主题: NLP / 开源 LLM
+- 备注: Meta 开源 LLaMA 系列,对开源大模型生态影响深远
+- 论文链接: https://arxiv.org/abs/2302.13971
+- PDF 链接: https://arxiv.org/pdf/2302.13971
+- HTML 全文: https://arxiv.org/html/2302.13971
+- 抓取时间: 2026-08-12 17:22:52
+- 提交历史: Submitted on 27 Feb 2023
+- 分类: Computation and Language (cs.CL) 
+- 作者: Touvron, H, Lavril, T, Izacard, G, Martinet, X, Lachaux, M, Lacroix, T, Rozi%C3%A8re, B, Goyal, N, Hambro, E, Azhar, F, Rodriguez, A, Joulin, A, Grave, E, Lample, G
+
+======================================================================
+Abstract
+======================================================================
+
+We introduce LLaMA, a collection of foundation language models ranging from 7B to 65B parameters. We train our models on trillions of tokens, and show that it is possible to train state-of-the-art models using publicly available datasets exclusively, without resorting to proprietary and inaccessible datasets. In particular, LLaMA-13B outperforms GPT-3 (175B) on most benchmarks, and LLaMA-65B is competitive with the best models, Chinchilla-70B and PaLM-540B. We release all our models to the research community.
+
+======================================================================
+Why it matters / 为什么要读这篇
+======================================================================
+
+Meta 开源 LLaMA 系列,对开源大模型生态影响深远
+
+======================================================================
+补充阅读笔记(中文)
+======================================================================
+
+## 1. 背景动机
+
+GPT-3、Chinchilla、Gopher、PaLM 等闭源大模型在 2022-2023 年陆续公布,展示出 few-shot 和
+in-context learning 的强大能力。但这些模型要么不开源,要么只放出 API。学术界和开源社区
+只能拿到 6B/13B 级别的 OPT、BLOOM 体验,无法研究 65B 这种规模的训练细节。
+
+Google 的 Chinchilla(2022)提出一个重要结论:在固定算力预算下,模型大小和训练 token 数
+应当近似等比缩放,大多数已有 LLM 其实是"被训欠了"。Meta 团队基于此重新设计训练配方,
+决定在更小的参数规模上,喂更多 token,做出"开源可复现"的高质量 LLaMA。
+
+## 2. 核心方法
+
+LLaMA 提供 7B / 13B / 33B / 65B 四个规模,沿用 decoder-only Transformer(类似 GPT),
+但做了几处针对性优化:
+  - Pre-RMSNorm(把 LayerNorm 换成 RMSNorm,提升数值稳定性);
+  - SwiGLU 激活(用 SiLU/GLU 组合替代 ReLU,在 PaLM 里被验证有效);
+  - Rotary Embeddings(RoPE,旋转式位置编码,外推性更好)。
+
+训练数据是 CommonCrawl、C4、Github、Wikipedia、Books、ArXiv、StackExchange 的混合,
+7B 用 1T token,65B 用 1.4T token,完全公开数据配比和去重方案。
+作者刻意只用了公开数据集,目标是"可复现":任何研究组都能从相同数据开始重训。
+
+## 3. 关键结果
+
+关键结论:LLaMA-13B 在大多数 benchmark 上超过 GPT-3(175B),LLaMA-65B 与 Chinchilla-70B 和
+PaLM-540B 持平甚至略优。论文系统对比了 common sense reasoning、closed/open book QA、
+reading comprehension、MATH、code(HumanEval)、多语种等任务。
+
+意义:1.4T token + 65B 参数的组合,在 2023 年初首次让开源 LLM 在综合能力上追平闭源旗舰。
+
+## 4. 局限与后续影响
+
+LLaMA 是开源 LLM 生态的引爆点。2023 年 3 月权重泄露(从一开始只给研究者,到后来在 4chan/Torrent
+流传)后,催生了 Alpaca、Vicuna、Koala、Llama 2 Chat 等一整套"开源 LLaMA 微调"生态,
+进一步催生 QLoRA、PEFT、FlashAttention-2、vLLM 等优化。
+
+没有 LLaMA,后来 Mistral、Qwen、DeepSeek、Yi 等国产/欧洲开源模型都不一定能在 2023 年就出现;
+它把"开源 LLM 能和闭源 LLM 掰手腕"从口号变成了事实。
+
+学术上,LLaMA 系列论文也成为后续研究 LLM 训练动力学、数据配比、scaling law 的标准基座。

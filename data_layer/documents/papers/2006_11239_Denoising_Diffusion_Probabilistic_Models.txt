@@ -1,0 +1,72 @@
+# Denoising Diffusion Probabilistic Models
+
+- arXiv id: 2006.11239
+- 中文标题(参考): Denoising Diffusion Probabilistic Models
+- 主题: 生成模型 / 扩散模型
+- 备注: DDPM,现代图像生成扩散模型的奠基论文之一
+- 论文链接: https://arxiv.org/abs/2006.11239
+- PDF 链接: https://arxiv.org/pdf/2006.11239
+- HTML 全文: https://arxiv.org/html/2006.11239
+- 抓取时间: 2026-08-12 17:22:54
+- 提交历史: Submitted on 19 Jun 2020 (v1), last revised 16 Dec 2020 (this version, v2)
+- 分类: Machine Learning (cs.LG) ; Machine Learning (stat.ML)
+- 作者: Ho, J, Jain, A, Abbeel, P
+
+======================================================================
+Abstract
+======================================================================
+
+We present high quality image synthesis results using diffusion probabilistic models, a class of latent variable models inspired by considerations from nonequilibrium thermodynamics. Our best results are obtained by training on a weighted variational bound designed according to a novel connection between diffusion probabilistic models and denoising score matching with Langevin dynamics, and our models naturally admit a progressive lossy decompression scheme that can be interpreted as a generalization of autoregressive decoding. On the unconditional CIFAR10 dataset, we obtain an Inception score of 9.46 and a state-of-the-art FID score of 3.17. On 256x256 LSUN, we obtain sample quality similar to ProgressiveGAN. Our implementation is available at this https URL
+
+======================================================================
+Why it matters / 为什么要读这篇
+======================================================================
+
+DDPM,现代图像生成扩散模型的奠基论文之一
+
+======================================================================
+补充阅读笔记(中文)
+======================================================================
+
+## 1. 背景动机
+
+在 DDPM 出现之前(2020 年之前),生成模型主要有三条路线:VAE、GAN、归一化流(Flow)。
+VAE 生成的图像偏模糊;GAN 训练不稳定、模式坍塌(mode collapse)严重、无法精确估计数据分布的对数似然;
+Flow 类方法对架构限制较严。
+
+作者(Jascha Sohl-Dickstein 等 2015 年)早期提出的"扩散模型"在 score-based 模型(Song & Ermon,2019)
+得到 SDE 视角的统一后,Ho 等人 2020 年这篇论文,首次把"加噪-去噪"的扩散过程实现为可大规模训练
+的实用图像生成模型,在 ImageNet 等基准上击败了当时最强的 GAN(ADM、BigGAN)。
+
+## 2. 核心方法
+
+前向过程 q(x_t | x_{t-1}) = N(x_t; sqrt(1 - β_t) x_{t-1}, β_t I),按预设的 variance schedule
+(β_1, ..., β_T)逐步加高斯噪声,经过 T 步后 x_T 近似标准正态分布。
+
+反向过程 p_θ(x_{t-1} | x_t) = N(x_{t-1}; μ_θ(x_t, t), Σ_θ(x_t, t))由神经网络(通常 U-Net)预测。
+训练目标被简化成预测噪声 ε_θ(x_t, t),即最小化 ||ε - ε_θ(x_t, t)||^2。
+
+采样时,从 x_T ~ N(0, I)出发,迭代调用 U-Net 预测噪声,逐步去噪回到 x_0,生成新图像。
+网络采用 U-Net(基于 ResNet block),在多个分辨率上做 self-attention;t 用 sinusoidal 位置编码
+注入到各残差块。
+
+## 3. 关键结果
+
+在 CIFAR-10 上,无条件生成 FID 达到 3.17(当时 SOTA),Inception Score 9.46;
+在 ImageNet 256x256 上,虽然样本质量初期略逊于 BigGAN,但样本多样性显著更好,且在 LSUN 和
+高分辨率任务上超过当时的 GAN/VAE/流模型。
+
+论文还做了一个有意思的发现:把训练目标从"预测均值"换成"预测噪声",loss 曲线更稳定,效果更好——
+这个看似简单的 trick 后来成为整个扩散模型领域的标准做法。
+
+## 4. 局限与后续影响
+
+DDPM 是扩散模型走向主流的奠基性工作。它把 score-based generative models 的理论(SDE 视角)
+和深度学习的工程实现(UNet+自注意力)漂亮地接在一起,使得后续 DALL·E 2、Stable Diffusion、
+Imagen、Midjourney、SDXL 等一整套文本到图像系统成为可能。
+
+技术上,DDPM 启发了大量改进:DDIM(确定性采样,加速 10~50x)、classifier-free guidance、
+latent diffusion(Stable Diffusion 把扩散过程搬到 latent space,大幅降本)、
+score-based SDE 统一框架(continuous-time diffusion)、Consistency Model(单步生成)等。
+
+应用上,扩散模型已扩展到音频(Stable Audio)、视频(Sora)、3D(DiffusionRF)、蛋白质(AlphaFold 3 借鉴)等。

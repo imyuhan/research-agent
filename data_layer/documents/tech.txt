@@ -1,0 +1,4 @@
+Python 是一种解释型、面向对象、动态数据类型的高级程序设计语言。
+LangGraph 是 LangChain 的图状态机扩展,用于构建多 agent 协作流程。
+RAG 是检索增强生成的缩写,让 LLM 能查外部知识库再回答。
+Vector Store 是向量数据库,做相似度检索。

@@ -1,0 +1,5 @@
+Transformer 是一种基于自注意力机制的深度学习架构，由 Google 在 2017 年的论文中提出。
+LangChain 是一个用于构建 LLM 应用的 Python 框架，提供了 Prompt、Chain、Agent、Retriever 等核心抽象。
+FAISS 是 Meta 开源的向量相似度检索库，支持十亿级别向量的毫秒级搜索。
+Prompt Engineering 是通过精心设计输入提示来引导 LLM 输出更符合预期结果的技术。
+Few-Shot Learning 是指在 prompt 中给出少量示例，让模型在不重新训练的情况下学会新任务。
